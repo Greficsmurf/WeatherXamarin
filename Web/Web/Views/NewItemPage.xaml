@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Web.Views.NewItemPage"
+             Title="Добавить город">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Назад" Clicked="Cancel_Clicked" />
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+            <StackLayout  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Spacing="20" Padding="15">
+                <SearchBar x:Name="SearchBar" Placeholder="Напишите название города, который хотите добавить" SearchButtonPressed="SearchSubmit" />
+                <ListView x:Name="FoundItemsListView"
+                ItemsSource="{Binding FoundCity}"
+                VerticalOptions="FillAndExpand"
+                HasUnevenRows="true"
+                
+                CachingStrategy="RecycleElement">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+
+                                <StackLayout Padding="10">
+
+                                    <FlexLayout JustifyContent="SpaceBetween" Direction="Row">
+                                        <StackLayout>
+                                            <Label x:Name="CityName" Text="{Binding name}" 
+                                d:Text="{Binding .}"
+                                LineBreakMode="NoWrap" 
+                                Style="{DynamicResource ListItemTextStyle}" 
+                                FontSize="20" />
+                                            <Label Text="{Binding main.temp, StringFormat='{0:N} C&#186;'}" 
+                                d:Text="Temp"
+                                LineBreakMode="NoWrap" 
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="16" />
+                                        </StackLayout>
+                                        <Button TextColor="White" BackgroundColor="#2196F3" Text="Добавить" FontSize="20" Clicked="Save_Clicked"/>
+                                    </FlexLayout>
+                                </StackLayout>
+
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <StackLayout IsVisible="{Binding IsNewLoading, Mode=OneWay}" Padding="12"
+                 AbsoluteLayout.LayoutFlags="PositionProportional"
+                 AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
+
+                <ActivityIndicator IsRunning="{Binding IsNewLoading, Mode=OneWay}" Color ="#80000000"/>
+
+                <Label Text="Loading..." HorizontalOptions="Center" TextColor="Black"/>
+
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+    
+
+</ContentPage>
